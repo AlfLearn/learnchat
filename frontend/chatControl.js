@@ -4,7 +4,7 @@
 
 // сервер, реализующий api (может отличаться от адреса сайта с которого идут запросы к api, потому указываем явно):
 //chatvis.apihost =  "http://localhost:10003"; 
-//chatvis.apihost =  "http://alfavika.ru:10003"; 
+chatvis.apihost =  "http://alfavika.ru:10003"; 
 
 // инициализация, в основном - панели авторизации:
 chatvis.InitConnect = function(opt)
