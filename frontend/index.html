@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="robots" content="noindex,nofollow"/>
+	<title>Испытываем чат на вебсокетах</title>
+	
+	<link rel="stylesheet" href="wschat001.css" />
+
+	<script src="jquery-1.10.2.min.js"></script>
+
+	<!--<script src="http://alfavika.ru:10003/socket.io/socket.io.js"></script> -->
+	<script src="socket.io.js"></script>
+
+	<script src="jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="jquery-ui.theme.min.css">
+	<link rel="stylesheet" href="jquery-ui.structure.min.css">
+	
+	<script type="text/javascript" src="tabManager.js"></script>
+	<script type="text/javascript" src="chatControl.js"></script>
+	<script type="text/javascript" src="appChatLearn.js"></script>
+	
+	<link rel="stylesheet" href="mainmenu12.css" />
+	<script type="text/javascript" src="menumakerLearn.js"></script>
+</head>
+
+<body style="margin:0px;">
+
+<!-- Панелька авторизации -->
+<div id="PanelStatus" class="PanelStatus" >
+	<div id="PanelAuth" > 
+		<input type="text" id="InputNick" value="" placeholder="Ник">
+		<br><input type="password" autocomplete="off" id="InputPass" value="" placeholder="Пароль (для зарегистрированных)"> 
+		<br><input type="button" id="ButtonAuth" value="Войти">
+	</div>
+	<input type="button" id="ButtonQuit" value="Выйти" style="display:none;">
+	<a id="ButtonAcc" href="javascript:void(0);" style="float:left;display:block;"> Регистрация </a>
+	
+</div>
+
+<!-- панелька регистрации и/или управления профилем -->
+<div id="PanelProfile" class="PanelProfile" style="display:none;" >
+	<label> Ваш аккаунт </label> <br>
+	<input type="text" id="InputRegNick" value="" placeholder="Ник"> <br>
+	<input type="text" id="InputRegEmail" value="" placeholder="email"> <br>
+	<input type="password" id="InputRegPass" value="" autocomplete="off" placeholder="Пароль"> <br>
+	<input type="button" id="ButtonUpdateProfile" value="Обновить" >
+</div>
+
+<!-- Верхняя панель управления с меню и другими инструментами -->
+<div id="rule" style="width:100%;height:24px; float:left; background-color: #BBFFBB;" > 
+	<div class="horizontalcssmenu" style="z-index:1000000; float:left; display:block;" >
+		<ul id="cssmenu1"> 
+			
+			<li style="border-left: 1px solid #202020; ">
+				<a id="you" href="javascript:void(0);">Меню0</a>
+				<ul>
+				<li><a href="javascript:void(0);" onclick="some01();" > Действие01 </a></li>
+				<li><a href="javascript:void(0);" onclick="some02();" > Действие02 </a></li>
+				</ul>
+				
+				<li><a href="javascript:void(0);">Меню1</a>
+				<ul>
+				<li><a href="javascript:void(0);" onclick="some11();" > Действие11 </a></li>
+				<li><a href="javascript:void(0);" onclick="some12();" > Действие12 </a></li>
+				</ul>
+			</li>
+			<!-- пункты главного меню можно добавлять прямо здесь, а можно динамически в скрипте -->
+			
+		</ul>
+		<br style="clear: left;" />
+	</div>
+	<span id="PanelTopic" style="padding-left:48px;">
+		Заголовок с текущей темой чата
+	</span>
+</div>
+
+<!-- Шрифт для контейнера задаётся явно, чтобы избежать конфликта с jquery-ui :( -->
+<div id="TabContainer" class="TabContainer" style="position:absolute; font-family:Verdana, sans-serif; font-size:14px;font-style:normal; color:black;" >
+	<ul id="TabList" class="TabList" >
+		<li id="NickMenu" style="padding:8px;" > Меню </li>
+	</ul>
+	
+	<div id="UserListContainer" class="UserListContainer" >
+		<br><br>Список юзеров
+	</div>
+</div>
+
+<!-- контекстная менюшка -->
+<div id="UserContextMenu" style="position:absolute;z-index:100000;background-color:#E3F1BD;padding:4px;border:1px solid; display:none"; >
+	<b> <p id="ContextNick">Ник</p> </b>
+	<p> <a id="ContextAM" href="javascript:void(0)">Обратиться</a></p>
+	<p> <a id="ContextPM" href="javascript:void(0)">Открыть ЛС</a> </p>
+	<p> <a id="ContextNickInfo" href="javascript:void(0)">Инфо</a> </p>
+	<p> <a id="ContextTabClose" href="javascript:void(0)" style="display:none;">Закрыть вкладку</a> </p>
+</div>
+
+</body>
+
+<script>
+$(document).ready(function() {
+	if(chatvis) 
+	chatvis.InitConnect({
+		TabContainer: document.getElementById("TabContainer"),
+		TabList:document.getElementById("TabList"),
+		MainChatName:"Main",
+		// все поля являются необязательными, без них компонент будет искать по id
+		PanelAuth: document.getElementById("PanelAuth"), 
+		ButtonAuth: document.getElementById("ButtonAuth"),
+		InputNick: document.getElementById("InputNick"),
+		InputPass: document.getElementById("InputPass"),
+		ButtonQuit: document.getElementById("ButtonQuit"),
+		NickMenu: document.getElementById("NickMenu")
+	});
+	
+	if(window.initMenu) initMenu(); // из menumaker12.js
+	
+	
+	$("#PanelProfile").dialog({autoOpen: false, position: { my: "center", at: "center", of: window }}); // рюшечки
+});
+</script>
+
+</html>
